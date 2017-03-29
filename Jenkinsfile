@@ -28,8 +28,6 @@ node {
 
   } finally {
     stage 'Shutdown'
-    sh "docker rmi \$(docker images -q)  &> /dev/null || true"
     sh "${compose} down -v"
-    sh "docker rm \$(docker ps -a -q) &> /dev/null || true"
   }
 }

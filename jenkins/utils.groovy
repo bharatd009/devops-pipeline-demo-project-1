@@ -20,8 +20,8 @@ def pushDockerImages(tag) {
                             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
     {
         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-        sh "docker push votingapp_backend:${tag}"
-        sh "docker push votingapp_frontend:${tag}"
+        sh "docker push allhaker/votingapp_backend:${tag}"
+        sh "docker push allhaker/votingapp_frontend:${tag}"
     }
 }
 
