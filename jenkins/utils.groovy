@@ -10,12 +10,12 @@ def runMocha() {
   sh "${compose} run mocha"
 }
 
-def tagImages(tag) {
+def tagDockerImages(tag) {
   sh "docker tag votingapp_frontend:local allhaker/votingapp_frontend:${tag}"
   sh "docker tag votingapp_backend:local allhaker/votingapp_backend::${tag}"
 }
 
-def pushImages(tag) {
+def pushDockerImages(tag) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'd1561356-160b-47fe-91a8-d7bd06b2b2d0',
                             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
     {
