@@ -10,8 +10,9 @@ def masterBuild() {
   stage 'Test Backend (mocha)'
   utils.runMocha()
 
-  // stage 'Push Docker Images to DockerHub (latest)'    
-  // utils.pushDockerImagesToArtifactory("latest")
+  stage 'Push Docker Images to DockerHub (latest)'    
+  utils.tagDockerImages("latest")
+  utils.pushDockerImages("latest")
 
   // stage 'Upgrade Demo Environment'
   // utils.upgradeEnvironment("latest")
