@@ -12,7 +12,7 @@ def runMocha() {
 
 def tagDockerImages(tag) {
   sh "docker tag votingapp_frontend:local allhaker/votingapp_frontend:${tag}"
-  sh "docker tag votingapp_backend:local allhaker/votingapp_backend::${tag}"
+  sh "docker tag votingapp_backend:local allhaker/votingapp_backend:${tag}"
 }
 
 def pushDockerImages(tag) {
