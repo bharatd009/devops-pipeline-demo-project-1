@@ -1,0 +1,28 @@
+
+body {
+}
+
+.container {
+  max-width: 750px;
+}
+
+todo {
+}
+
+.form-control {
+  width: 250px !important;
+}
+
+.badge {
+  min-width: 40px;
+  font-size: 35px;
+}
+
+h1 {
+  text-align: center;
+  margin: 40px 0;
+}
+
+h3 {
+  text-align: center;
+}

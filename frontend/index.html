@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>IHP Voting App</title>
+  <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="app/css/main.css" />
+
+  <script src="https://apis.google.com/js/client.js"></script>
+</head>
+
+<body>
+    <!-- mount point -->
+    <div class="container">
+      <projects-list></projects-list>
+    </div>
+    <!-- include riot.js and the compiler -->
+    <script src="../node_modules/riot/riot.min.js"></script>
+    <script src="../dist/js/projects-list.js"></script>
+    <!-- mount normally -->
+    <script>
+    var xmlhttp = new XMLHttpRequest();
+    var ENDPOINT_URI = "http://192.130.3.205:8080"
+
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var response = JSON.parse(xmlhttp.responseText);
+            loadProjects(response.results);
+        }
+    }
+    xmlhttp.open("GET", ENDPOINT_URI + "/api/v1/projects", true);
+    xmlhttp.send();
+
+    function loadProjects(projects) {
+        riot.mount('projects-list', {
+            title: 'Vote for your three favorites',
+            projects: projects,
+            url: ENDPOINT_URI + '/api/v1/votes'
+        });
+    }
+    </script>
+</body>
+
+</html>

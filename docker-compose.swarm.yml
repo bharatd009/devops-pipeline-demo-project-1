@@ -1,0 +1,18 @@
+db:
+  environment:
+    POSTGRES_DB: votingapp
+    POSTGRES_PASSWORD: votingapp
+    POSTGRES_USER: votingapp
+  image: postgres:9.4
+  labels:
+    io.rancher.scheduler.affinity:host_label: tebro/type=database
+  volumes:
+  - /opt/docker/votingapp_data:/var/lib/postgresql/data
+backend:
+  environment:
+    DATABASE_URL: postgres://votingapp:votingapp@db/votingapp
+  image: 
+  links:
+  - db:db
+frontend:
+  image: 
