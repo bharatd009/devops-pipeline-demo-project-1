@@ -1,6 +1,6 @@
 import groovy.json.JsonOutput
 
-compose = "docker-compose -f docker-compose.jenkins.yml -f docker-compose.test.yml"
+compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml"
 
 def buildDocker() {
   sh "${compose} build"
