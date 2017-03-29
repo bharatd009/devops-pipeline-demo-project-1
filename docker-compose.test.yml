@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  mocha:
+    build: backend
+    environment:
+      - DATABASE_URL=postgres://votingapp:votingapp@db/votingapp
+      - OUTPUT=/results/test-results.xml
+    volumes:
+      - ./results/mocha:/results
+    depends_on:
+      - db
+    links:
+      - db
+    entrypoint: ./wait-for-db.sh
+    command: npm run test
