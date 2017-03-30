@@ -29,7 +29,7 @@ def pushDockerImages(tag) {
 }
 
 def upgradeEnvironment(environment) {
-    withCredentials([[$class: 'AmazonWebServicesCredentialsMultiBinding', credentialsId: '15736741-7880-434d-83b8-9c255ba8cd60',
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '15736741-7880-434d-83b8-9c255ba8cd60',
                             accessKeyVariable: 'ACCESSKEY', secretKeyVariable: 'SECRETKEY']]) 
     {
         if (environment == 'development') {
