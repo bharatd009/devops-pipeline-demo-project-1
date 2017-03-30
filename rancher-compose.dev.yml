@@ -2,7 +2,6 @@ version: '2'
 services:
   balancer:
     scale: 1
-    start_on_create: true
     lb_config:
       certs: []
       port_rules:
@@ -26,7 +25,6 @@ services:
       unhealthy_threshold: 3
       interval: 2000
   backend:
-    start_on_create: true
     health_check:
       response_timeout: 2000
       healthy_threshold: 2
@@ -36,8 +34,9 @@ services:
       interval: 2000
       strategy: recreate
       reinitializing_timeout: 60000
+  seed-db:
+    scale: 1
   frontend:
-    start_on_create: true
     health_check:
       response_timeout: 2000
       healthy_threshold: 2
@@ -49,4 +48,3 @@ services:
       reinitializing_timeout: 60000
   db:
     scale: 1
-    start_on_create: true
