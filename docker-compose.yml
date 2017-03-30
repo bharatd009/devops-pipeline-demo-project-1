@@ -4,6 +4,7 @@ services:
   backend:
     build: backend
     image: votingapp_backend:local
+    command: npm start
     entrypoint: ./wait-for-db.sh
     environment:
       - DATABASE_URL=postgres://votingapp:votingapp@db/votingapp
