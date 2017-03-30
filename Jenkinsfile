@@ -22,7 +22,7 @@ node {
   } catch (err) {
 
     def utils = load "jenkins/utils.groovy"
-    utils.failSlack()
+    //utils.failSlack()
 
     throw err
 
