@@ -21,7 +21,7 @@
     <!-- mount normally -->
     <script>
     var xmlhttp = new XMLHttpRequest();
-    var ENDPOINT_URI = "http" + window.location.hostname;
+    var ENDPOINT_URI = window.location.origin;
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
