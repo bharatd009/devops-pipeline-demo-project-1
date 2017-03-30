@@ -3,7 +3,7 @@ import groovy.json.JsonOutput
 compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml"
 devServices = "frontend backend seed-db"
 projectNameBase = "demo-project-"
-rancherUrl = "http://192.168.50.4:8080/v1"
+rancherUrl = "http://192.168.50.4:8080/v2-beta"
 
 def buildDocker() {
   sh "${compose} build"
