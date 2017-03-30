@@ -3,7 +3,7 @@ version: '2'
 services:
   backend:
     build: backend
-    image: votingapp_frontend:local
+    image: votingapp_backend:local
     entrypoint: ./wait-for-db.sh
     environment:
       - DATABASE_URL=postgres://votingapp:votingapp@db/votingapp
@@ -14,7 +14,7 @@ services:
 
   frontend:
     build: frontend
-    image: votingapp_backend:local
+    image: votingapp_frontend:local
     ports:
      - "3000:3000"
 
