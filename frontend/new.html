@@ -20,7 +20,7 @@
     <script src="../dist/js/new-project.js"></script>
     <!-- mount normally -->
     <script>
-    var ENDPOINT_URI = window.location.hostname;
+    var ENDPOINT_URI = "http" + window.location.hostname;
 
     riot.mount('new-project', {
         title: 'Uusi projekti',
