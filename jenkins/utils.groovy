@@ -33,7 +33,8 @@ def upgradeEnvironment(environment) {
                             accessKeyVariable: 'ACCESSKEY', secretKeyVariable: 'SECRETKEY']]) 
     {
         if (environment == 'development') {
-            def rancherDev = "rancher-compose -f docker-compose.dev.yml --url ${rancherUrl} --access-key ${ACCESSKEY} --secret-key  ${SECRETKEY} -p ${projectNameBase}${environment} up -d"
+            def rancherDev = "rancher-compose -f docker-compose.dev.yml --url ${rancherUrl} --access-key ${ACCESSKEY}" + 
+                "--secret-key ${SECRETKEY} -p ${projectNameBase}${environment} up -d"
             sh "${rancherDev} --confirm-upgrade ${devServices}"
             sh "${rancherDev} --force-upgrade --pull ${devServices}"
         }
