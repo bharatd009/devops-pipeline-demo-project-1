@@ -1,13 +1,9 @@
 version: '2'
 services:
   backend:
-    start_on_create: true
-    labels:
-      io.rancher.scheduler.global: 'true'
+    start_on_create: true      
   db:
     scale: 1
     start_on_create: true
   frontend:
     start_on_create: true
-    labels:
-      io.rancher.scheduler.global: 'true'

@@ -6,6 +6,8 @@ services:
       DATABASE_URL: postgres://votingapp:votingapp@db/votingapp
     links:
     - db:db
+    labels:
+      io.rancher.scheduler.global: 'true'
   db:
     image: postgres:9.4
     environment:
@@ -18,3 +20,5 @@ services:
       io.rancher.scheduler.affinity:host_label: Database=true
   frontend:
     image: allhaker/votingapp_frontend:latest
+    labels:
+      io.rancher.scheduler.global: 'true'
