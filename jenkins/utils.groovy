@@ -1,6 +1,9 @@
 import groovy.json.JsonOutput
 
 compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml"
+devServices = "frontend backend seed-db"
+projectNameBase = "demo-project-"
+rancherUrl = "http://192.168.50.4:8080/"
 
 def buildDocker() {
   sh "${compose} build"
@@ -22,6 +25,18 @@ def pushDockerImages(tag) {
         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
         sh "docker push allhaker/votingapp_backend:${tag}"
         sh "docker push allhaker/votingapp_frontend:${tag}"
+    }
+}
+
+def upgradeEnvironment(environment) {
+    withCredentials([[$class: 'AmazonWebServicesCredentials', credentialsId: '15736741-7880-434d-83b8-9c255ba8cd60',
+                            accessKeyVariable: 'ACCESSKEY', secretKeyVariable: 'SECRETKEY']]) 
+    {
+        if (environment == 'development') {
+            def rancherDev = "rancher-compose -f docker-compose.dev.yml --url ${rancherUrl} --access-key ${ACCESSKEY} --secret-key  ${SECRETKEY} -p ${projectNameBase}${environment} up -d"
+            sh "${rancherDev} --confirm-upgrade ${devServices}"
+            sh "${rancherDev} --force-upgrade --pull ${devServices}"
+        }
     }
 }
 

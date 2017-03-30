@@ -10,12 +10,12 @@ def masterBuild() {
   stage 'Test Backend (mocha)'
   utils.runMocha()
 
-  stage 'Push Docker Images to DockerHub (latest)'    
-  utils.tagDockerImages("latest")
-  utils.pushDockerImages("latest")
+  stage 'Push Docker Images to DockerHub (development)'    
+  utils.tagDockerImages("development")
+  utils.pushDockerImages("development")
 
-  // stage 'Upgrade Demo Environment'
-  // utils.upgradeEnvironment("latest")
+  stage 'Upgrade Development Environment'
+  utils.upgradeEnvironment("development")
 }
 
 return this
