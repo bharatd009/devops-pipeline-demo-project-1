@@ -31,7 +31,7 @@
   </div>
 
   <div if={ voted }>
-    <h3>Kiitos äänestyksestäsi!</h3>
+    <h3>Thank you for your vote!</h3>
   </div>
 
   <script>
@@ -86,7 +86,7 @@
       error = false
 
       if (self.votes.length < 3) {
-        self.errors.push({message: "Merkitse kolme ääntä"})
+        self.errors.push({message: "Select 3 projects first!"})
         error = true
       }
 
@@ -101,7 +101,7 @@
             send()
           }
           if (xmlhttp.readyState == 4 && xmlhttp.status == 405) {
-            self.errors.push({message: "Olet jo äänestänyt"})
+            self.errors.push({message: "You have already voted!"})
             self.update()
           }
         }
