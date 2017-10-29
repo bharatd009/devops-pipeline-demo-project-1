@@ -4,6 +4,8 @@
 node_modules
 doc
 
+frontend/dist/
+
 test-*.xml
 
 *.log

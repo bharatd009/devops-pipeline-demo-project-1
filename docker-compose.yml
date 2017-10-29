@@ -16,6 +16,7 @@ services:
   frontend:
     build: frontend
     image: votingapp_frontend:local
+    command: npm run serve
     ports:
      - "3000:3000"
 

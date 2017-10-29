@@ -7,9 +7,8 @@
   <messages></messages>
 
   <div if={ !voted }>
-    <authorize></authorize>
 
-    <form onsubmit={ add } class="form-inline pull-right">
+    <form onsubmit={ add } class="form-inline">
       <div class="form-group">
         <input name="name" type="text" class="form-control" placeholder="Email" value={email}>
       </div>
@@ -71,9 +70,9 @@
         xmlhttp.onload = function() {
           if (xmlhttp.status >= 200 && xmlhttp.status < 400) {
             votesSent++
-            if (votesSent == 3) {
-              reset()
+            if (votesSent == 1) {
               self.voted = true
+              reset()
             }
           }
         }
@@ -90,10 +89,8 @@
         self.errors.push({message: "Merkitse kolme ääntä"})
         error = true
       }
-      if (self.user.length == 0) {
-        self.errors.push({message: "Anna palvelulle lupa lukea sähköpostiosoitteesi"})
-        error = true
-      }
+
+      self.setEmail(e.target.name.value);
 
       if (!error) {
         var xmlhttp = new XMLHttpRequest();
@@ -177,27 +174,3 @@
     }
   </script>
 </messages>
-
-<authorize>
-  <button class="btn btn-success" onclick={auth}>Hae sähköpostisi googlesta</button>
-
-  <script>
-    var self = this
-
-    auth() {
-      var config = {
-        'client_id': '692928060586-hdgprhok15rkcpdrkcmh4p3s5m12sdgb.apps.googleusercontent.com',
-        'scope': 'https://www.googleapis.com/auth/userinfo.email'
-      }
-      gapi.auth.authorize(config, function() {
-        gapi.client.load('oauth2', 'v2', function() {
-          gapi.client.oauth2.userinfo.get().execute(function(resp) {
-            console.log(resp.email)
-            self.parent.setEmail(resp.email)
-          })
-        });
-      })
-    }
-  </script>
-</authorize>
-
