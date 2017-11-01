@@ -19,7 +19,7 @@ def tagDockerImages(tag) {
 }
 
 def pushDockerImages(tag) {
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'd1561356-160b-47fe-91a8-d7bd06b2b2d0',
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-login',
                             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) 
     {
         sh "docker login -u ${USERNAME} -p ${PASSWORD}"
