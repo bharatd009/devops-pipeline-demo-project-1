@@ -1,33 +1,30 @@
-node {
+def compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml"
+def projectName = "votingapp"
 
-  try {
+pipeline {
+  agent any
+  options {
+    timeout(time: 20, unit: 'MINUTES')
+  }
 
-    stage 'Checkout'
-    checkout scm
-
-    def branch = env.BRANCH_NAME
-
-    print "Current branch ${branch}"
-
-    if (branch == "master") {
-      def build = load "jenkins/masterBuild.groovy"
-      build.masterBuild();
+  stages {
+    stage('Checkout') {
+      steps {
+        notifyBuild('STARTED')
+        checkout scm
+      }
     }
 
-    if (branch != "master") {
-      def build = load "jenkins/defaultBuild.groovy"
-      build.defaultBuild();
+    stage('Build') {
+      steps {
+        sh "${compose} -p ${projectName} build --pull"
+      }
     }
+  }
 
-  } catch (err) {
-
-    def utils = load "jenkins/utils.groovy"
-    //utils.failSlack()
-
-    throw err
-
-  } finally {
-    stage 'Shutdown'
-    sh "${compose} down -v"
+  post {
+    always {
+      sh "${compose} -p ${projectName} down -v"
+    }
   }
 }
