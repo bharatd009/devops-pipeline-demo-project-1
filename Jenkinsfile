@@ -49,7 +49,6 @@ pipeline {
         sh "docker logout"
       }
     }
-  }
 
     stage('Tag and Push Docker Images to DockerHub') {
       when {
