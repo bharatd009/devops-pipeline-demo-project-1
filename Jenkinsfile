@@ -49,22 +49,25 @@ pipeline {
         sh "docker logout"
       }
     }
+  }
 
-    stage('Tag and Push Docker Images to DockerHub') {
+    stage('Upgrade Rancher Environment') {
       when {
         expression { env.BRANCH_NAME == 'master' }
       }
 
       steps {
         def rancherHeaders = "-H 'Content-Type: application/json' -X POST"
-        def rancherURL = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=rKL57M6PPe6HQqjlAAng0r8Ahi6sGGFPx2rDStq4&projectId=1a5'
 
-        def rancherJSONFrontend = '{"push_data":{"tag":"development"},"repository":{"repo_name":"allhaker/votingapp_frontend"}}'
-        def rancherJSONBackend = '{"push_data":{"tag":"development"},"repository":{"repo_name":"allhaker/votingapp_backend"}}'
+        def rancherJSONFrontend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_frontend:development"}}'
+        def rancherURLFrontend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=EcDxak0jUrYd5rQG0MTFQKRgpILhfzcsfdGnrFQf&projectId=1a5'
+
+        def rancherJSONBackend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_backend:development"}}'
+        def rancherURLBackend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=URsWxy6BQftHXXWIqPupFl6QNSttSCyGRjA0J3FI&projectId=1a5'
         
 
-        sh "curl ${rancherHeaders} -d '${rancherJSONFrontend}' '${rancherURL}'"
-        sh "curl ${rancherHeaders} -d '${rancherJSONBackend}' '${rancherURL}'"
+        sh "curl ${rancherHeaders} -d '${rancherJSONFrontend}' '${rancherURLFrontend}'"
+        sh "curl ${rancherHeaders} -d '${rancherJSONBackend}' '${rancherURLBackend}'"
       }
     }
   }
