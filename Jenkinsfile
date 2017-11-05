@@ -24,6 +24,27 @@ pipeline {
         sh "${compose} run mocha"
       }
     }
+
+    stage('Tag and Push Docker Images to DockerHub') {
+      when {
+        expression { env.BRANCH_NAME == 'master' }
+      }
+
+      steps {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-login',
+        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          // Login to Docker Registry
+          sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+        }
+
+        // Tag Docker Images
+        sh "docker tag votingapp_frontend allhaker/votingapp_frontend"
+        sh "docker tag votingapp_backend allhaker/votingapp_backend"
+
+        // Logout from Docker Registry
+        sh "docker logout ${dockerEnvironment}"
+      }
+    }
   }
 
   post {
