@@ -1,5 +1,4 @@
-def compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml"
-def projectName = "votingapp"
+def compose = "docker-compose -f docker-compose.yml -f docker-compose.test.yml -p votingapp"
 
 pipeline {
   agent any
@@ -16,14 +15,20 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh "${compose} -p ${projectName} build --pull"
+        sh "${compose} build --pull"
+      }
+    }
+
+    stage('Test Backend (Mocha)') {
+      steps {
+        sh "${compose} run mocha"
       }
     }
   }
 
   post {
     always {
-      sh "${compose} -p ${projectName} down -v"
+      sh "${compose} down -v"
     }
   }
 }
