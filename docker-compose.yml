@@ -1,9 +1,8 @@
-version: '2'
+version: '3'
 
 services:
   backend:
     build: backend
-    image: votingapp_backend:local
     command: npm start
     entrypoint: ./wait-for-db.sh
     environment:
@@ -15,8 +14,6 @@ services:
 
   frontend:
     build: frontend
-    image: votingapp_frontend:local
-    command: npm run serve
     ports:
      - "3000:3000"
 

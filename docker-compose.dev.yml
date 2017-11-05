@@ -1,12 +1,24 @@
 version: '2'
 services:
   balancer:
-    image: rancher/lb-service-haproxy:v0.6.2
+    image: rancher/lb-service-haproxy:v0.7.9
     ports:
     - 80:80/tcp
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
+      io.rancher.scheduler.affinity:host_label: balancer=true
+  seed-db:
+    image: allhaker/votingapp_backend:development
+    environment:
+      DATABASE_URL: postgres://votingapp:votingapp@db/votingapp
+    links:
+    - db:db
+    command:
+    - node
+    - db/seeds.js
+    labels:
+      io.rancher.container.start_once: 'true'
   backend:
     image: allhaker/votingapp_backend:development
     environment:
@@ -14,19 +26,16 @@ services:
     links:
     - db:db
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.scheduler.global: 'true'
-  seed-db:
-    image: allhaker/votingapp_backend:latest
-    command: node db/seeds.js
-    environment:
-      DATABASE_URL: postgres://votingapp:votingapp@db/votingapp
-    links:
-    - db:db
-    labels:
-      io.rancher.container.start_once: 'true'
   frontend:
     image: allhaker/votingapp_frontend:development
+    command:
+    - npm
+    - run
+    - serve
     labels:
+      io.rancher.container.pull_image: always
       io.rancher.scheduler.global: 'true'
   db:
     image: postgres:9.4
