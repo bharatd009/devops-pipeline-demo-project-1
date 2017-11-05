@@ -49,7 +49,6 @@ pipeline {
         sh "docker logout"
       }
     }
-  }
 
     stage('Upgrade Rancher Environment') {
       when {
