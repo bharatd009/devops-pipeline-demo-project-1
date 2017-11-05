@@ -55,17 +55,19 @@ pipeline {
         expression { env.BRANCH_NAME == 'master' }
       }
 
-      def rancherHeaders = "-H 'Content-Type: application/json' -X POST"
-
-      def rancherJSONFrontend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_frontend:development"}}'
-      def rancherURLFrontend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=EcDxak0jUrYd5rQG0MTFQKRgpILhfzcsfdGnrFQf&projectId=1a5'
-
-      def rancherJSONBackend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_backend:development"}}'
-      def rancherURLBackend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=URsWxy6BQftHXXWIqPupFl6QNSttSCyGRjA0J3FI&projectId=1a5'
-
       steps {
-        sh "curl ${rancherHeaders} -d '${rancherJSONFrontend}' '${rancherURLFrontend}'"
-        sh "curl ${rancherHeaders} -d '${rancherJSONBackend}' '${rancherURLBackend}'"
+        script {
+          env.rancherHeaders = "-H 'Content-Type: application/json' -X POST"
+
+          env.rancherJSONFrontend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_frontend:development"}}'
+          env.rancherURLFrontend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=EcDxak0jUrYd5rQG0MTFQKRgpILhfzcsfdGnrFQf&projectId=1a5'
+
+          env.rancherJSONBackend = '{"push_data":{"tag":"latest"},"repository":{"repo_name":"allhaker/votingapp_backend:development"}}'
+          env.rancherURLBackend = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=URsWxy6BQftHXXWIqPupFl6QNSttSCyGRjA0J3FI&projectId=1a5'
+        }
+
+        sh "curl ${env.rancherHeaders} -d '${env.rancherJSONFrontend}' '${env.rancherURLFrontend}'"
+        sh "curl ${env.rancherHeaders} -d '${env.rancherJSONBackend}' '${env.rancherURLBackend}'"
       }
     }
   }
