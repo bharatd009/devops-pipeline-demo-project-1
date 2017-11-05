@@ -42,7 +42,7 @@ pipeline {
         sh "docker tag votingapp_backend allhaker/votingapp_backend"
 
         // Logout from Docker Registry
-        sh "docker logout ${dockerEnvironment}"
+        sh "docker logout"
       }
     }
   }
