@@ -11,7 +11,7 @@
     "browsersync": "browser-sync start --server --files 'dist/*.js, app/*.html, index.html, app/css/*'",
     "serve": "parallelshell 'npm run watch' 'npm run browsersync'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "parallelshell 'npm run watch' 'npm run browsersync'"
   },
   "dependencies": {
     "bootstrap": "^3.3.5",
