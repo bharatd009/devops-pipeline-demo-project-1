@@ -51,6 +51,25 @@ pipeline {
     }
   }
 
+    stage('Tag and Push Docker Images to DockerHub') {
+      when {
+        expression { env.BRANCH_NAME == 'master' }
+      }
+
+      steps {
+        def rancherHeaders = "-H 'Content-Type: application/json' -X POST"
+        def rancherURL = 'http://192.168.50.4:8080/v1-webhooks/endpoint?key=rKL57M6PPe6HQqjlAAng0r8Ahi6sGGFPx2rDStq4&projectId=1a5'
+
+        def rancherJSONFrontend = '{"push_data":{"tag":"development"},"repository":{"repo_name":"allhaker/votingapp_frontend"}}'
+        def rancherJSONBackend = '{"push_data":{"tag":"development"},"repository":{"repo_name":"allhaker/votingapp_backend"}}'
+        
+
+        sh "curl ${rancherHeaders} -d '${rancherJSONFrontend}' '${rancherURL}'"
+        sh "curl ${rancherHeaders} -d '${rancherJSONBackend}' '${rancherURL}'"
+      }
+    }
+  }
+
   post {
     always {
       sh "${compose} down -v"
