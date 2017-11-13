@@ -5,9 +5,9 @@ services:
     ports:
     - 80:80/tcp
     labels:
+      io.rancher.scheduler.affinity:host_label: Balancer=true
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
-      io.rancher.scheduler.affinity:host_label: balancer=true
   seed-db:
     image: allhaker/votingapp_backend:development
     environment:
@@ -20,7 +20,7 @@ services:
     labels:
       io.rancher.container.start_once: 'true'
   backend:
-    image: allhaker/votingapp_backend:development
+    image: allhaker/votingapp_backend
     environment:
       DATABASE_URL: postgres://votingapp:votingapp@db/votingapp
     links:
@@ -28,8 +28,9 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.global: 'true'
+      service: backend
   frontend:
-    image: allhaker/votingapp_frontend:development
+    image: allhaker/votingapp_frontend
     command:
     - npm
     - run
@@ -37,6 +38,7 @@ services:
     labels:
       io.rancher.container.pull_image: always
       io.rancher.scheduler.global: 'true'
+      service: frontend
   db:
     image: postgres:9.4
     environment:
