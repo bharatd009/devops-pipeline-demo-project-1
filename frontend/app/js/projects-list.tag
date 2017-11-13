@@ -1,8 +1,7 @@
 <projects-list>
   <h1>{opts.title}</h1>
   <hr/>
-  <br />
-  <h1>Hi everyone! Pipeline Actually works!!!</h1>
+  
 
   <errors></errors>
 
