@@ -21,7 +21,14 @@
     <!-- mount normally -->
     <script>
     var xmlhttp = new XMLHttpRequest();
-    var url = "http://localhost:8080/api/v1/results";
+    var path = "/api/v1/results";
+    var url = "";
+
+    if (window.location.hostname === 'localhost') {
+        url = 'http://localhost:8080' + path;
+    } else {
+        url = window.location.origin + path;
+    }
 
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
