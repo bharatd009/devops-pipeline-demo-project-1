@@ -42,8 +42,8 @@ pipeline {
         sh "docker tag votingapp_backend allhaker/votingapp_backend"
 
         // Push Docker Images
-        sh "docker push allhaker/votingapp_frontend"
-        sh "docker push allhaker/votingapp_backend"
+        sh "docker push swapnil1992/votingapp_frontend"
+        sh "docker push swapnil1992/votingapp_backend"
 
         // Logout from Docker Registry
         sh "docker logout"
